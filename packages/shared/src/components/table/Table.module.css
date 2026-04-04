@@ -1,0 +1,142 @@
+.container {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  background-color: #f8fafc;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.th.sortable:hover {
+  background-color: #f1f5f9;
+}
+
+.th.left {
+  text-align: left;
+}
+
+.th.center {
+  text-align: center;
+}
+
+.th.right {
+  text-align: right;
+}
+
+.sortIcon {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 0.875rem;
+}
+
+.td.left {
+  text-align: left;
+}
+
+.td.center {
+  text-align: center;
+}
+
+.td.right {
+  text-align: right;
+}
+
+.clickableRow {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickableRow:hover {
+  background-color: #f8fafc;
+}
+
+.clickableRow:last-child .td {
+  border-bottom: none;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.paginationInfo {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageNumber {
+  font-size: 0.875rem;
+  color: #475569;
+  font-weight: 600;
+}

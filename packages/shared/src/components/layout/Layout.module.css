@@ -1,0 +1,103 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.hasSider {
+  flex-direction: row;
+}
+
+.sider {
+  background-color: #1e293b;
+  color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sider.collapsed {
+  width: 80px !important;
+}
+
+.sider.collapsed * {
+  text-align: center;
+}
+
+.collapseButton {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #334155;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.collapseButton:hover {
+  background-color: #475569;
+}
+
+.header {
+  background-color: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  flex-shrink: 0;
+}
+
+.header.fixed {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.content {
+  flex: 1;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  overflow: auto;
+}
+
+.hasSider .content {
+  flex: 1;
+}
+
+.footer {
+  background-color: white;
+  border-top: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  flex-shrink: 0;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .hasSider {
+    flex-direction: column;
+  }
+
+  .sider {
+    width: 100% !important;
+  }
+
+  .sider.collapsed {
+    width: 100% !important;
+    max-height: 60px;
+    overflow: hidden;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}

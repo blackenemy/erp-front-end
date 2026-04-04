@@ -1,0 +1,119 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.125rem;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  outline: none;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.default {
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.default:hover {
+  border-color: #cbd5e1;
+}
+
+.outlined {
+  border: 2px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.outlined:hover {
+  border-color: #cbd5e1;
+}
+
+.outlined:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filled {
+  border: none;
+}
+
+.filled:hover {
+  border: 1px solid #cbd5e1;
+}
+
+.filled:focus-within {
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.error {
+  border-color: #dc2626 !important;
+}
+
+.error:focus-within {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+.leftIcon,
+.rightIcon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: #64748b;
+}
+
+.leftIcon {
+  left: 0.75rem;
+}
+
+.leftIcon + .input {
+  padding-left: 2.5rem;
+}
+
+.rightIcon {
+  right: 0.75rem;
+}
+
+.input + .rightIcon {
+  padding-right: 2.5rem;
+}
+
+.message {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.125rem;
+}
+
+.message.error {
+  color: #dc2626;
+}

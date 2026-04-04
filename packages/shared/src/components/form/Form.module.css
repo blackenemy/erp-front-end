@@ -1,0 +1,79 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inline .formItem {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.labelWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 0.25rem;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.help {
+  color: #64748b;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.inline .label {
+  margin-bottom: 0;
+}
+
+.inline .wrapper {
+  margin-bottom: 0;
+}

@@ -1,0 +1,72 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+.next
+out
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo
+.turbo
+turbo.json.bak
+
+# pnpm
+pnpm-lock.yaml.bak
+.pnpm-store
+
+# Next.js
+.next
+out
+.swc
+
+# Testing
+coverage
+.nyc_output
+
+# Production
+build
+*.tsbuildinfo
+
+# Misc
+*.pem
+.cache
+.DS_Store
+*.seed
+*.pid.lock
+
+# Debugging
+.vscode/launch.json
+.vscode/extensions.json
+
+# Local environment files
+.env.test.local
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
