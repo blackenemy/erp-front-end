@@ -1,20 +1,20 @@
 # ERP Front-end
 
-A modern ERP front-end application built with Next.js 14, React 18, and TypeScript, following monorepo architecture with pnpm workspaces.
+แอปพลิเคชัน ERP front-end สมัยใหม่ที่สร้างด้วย Next.js 14, React 18 และ TypeScript โดยปฏิบัติตามสถาปัตยกรรม monorepo ด้วย pnpm workspaces
 
-## 📁 Project Structure
+## 📁 โครงสร้างโปรเจกต์
 
 ```
 erp-front-end/
 ├── apps/
-│   └── erp/                   # Main Next.js application
+│   └── erp/                   # แอปพลิเคชัน Next.js หลัก
 │       ├── src/
 │       │   └── app/
 │       ├── package.json
 │       ├── next.config.js
 │       └── tsconfig.json
 ├── packages/
-│   └── shared/                # Shared components, hooks, utilities, and APIs
+│   └── shared/                # Shared components, hooks, utilities และ APIs
 │       └── src/
 │           ├── components/
 │           │   ├── badge/
@@ -48,29 +48,31 @@ erp-front-end/
 └── README.md
 ```
 
-## 🚀 Available Scripts
+## 🚀 Script ที่มีอยู่
 
-### Root level
+### ระดับ Root
+
 ```bash
-pnpm dev          # Start all apps in development mode
-pnpm build        # Build all packages and apps
-pnpm lint         # Lint all packages and apps
-pnpm typecheck    # Type check all packages and apps
-pnpm clean        # Clean all build outputs and dependencies
+pnpm dev          # เริ่มแอปทั้งหมดในโหมด development
+pnpm build        # Build ทุก packages และ apps
+pnpm lint         # Lint ทุก packages และ apps
+pnpm typecheck    # Type check ทุก packages และ apps
+pnpm clean        # ล้างผลลัพธ์และ dependencies ทั้งหมด
 ```
 
 ### ERP app
+
 ```bash
 cd apps/erp
-pnpm dev          # Start Next.js development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
+pnpm dev          # เริ่ม Next.js development server
+pnpm build        # Build สำหรับ production
+pnpm start        # เริ่ม production server
+pnpm lint         # รัน ESLint
 ```
 
-## 🎨 Available Components
+## 🎨 Components ที่มีอยู่
 
-All components are located in `packages/shared/src/components/` and follow consistent patterns:
+ทุก components อยู่ใน `packages/shared/src/components/` และปฏิบัติตามรูปแบบที่สอดคล้องกัน:
 
 ### Button
 
@@ -116,7 +118,7 @@ Features: validation, error states, help text
 
 ### FormWeightTier
 
-Custom form component for weight tier configuration
+Custom component สำหรับการกำหนดค่า weight tier
 Features: dynamic tier management, weight ranges
 
 ### Layout
@@ -124,71 +126,73 @@ Features: dynamic tier management, weight ranges
 Components: Layout, Layout.Sider, Layout.Header, Layout.Content, Layout.Footer
 Features: collapsible sidebar, fixed header, responsive
 
-## 🏗️ Architecture
+## 🏗️ สถาปัตยกรรม
 
-This project follows the ERP Architecture conventions:
+โปรเจกต์นี้ปฏิบัติตามข้อตกลง ERP Architecture:
 
-1. **page.tsx** (Server Component) → Imports only Screen
-2. **Screen Component** → May contain Containers
-3. **Container Components** (Stateful) → Render Presenters
-4. **Presenter Components** (Stateless) → UI only
-5. **Shared Components** → Reusable across modules
+1. **page.tsx** (Server Component) → นำเข้าเฉพาะ Screen
+2. **Screen Component** → อาจมี Containers
+3. **Container Components** (Stateful) → เรนเดอร์ Presenters
+4. **Presenter Components** (Stateless) → UI เท่านั้น
+5. **Shared Components** → นำกลับมาใช้ในทั้ง modules
 
-### Import Rules
+### กฎการ Import
 
-✅ **Allowed:**
-- Any module can import from `@repo/shared`
-- Within same module, imports are free
+✅ **อนุญาต:**
 
-❌ **Forbidden:**
-- Cross-module imports between apps
-- Importing private containers from other modules
+- Module ใดก็ได้สามารถ import จาก `@repo/shared`
+- ภายใน module เดียวกัน imports มีอิสระ
+
+❌ **ห้าม:**
+
+- Cross-module imports ระหว่าง apps
+- Importing private containers จาก modules อื่น
 
 ## 🔗 API Integration
 
-The project includes API utilities in `packages/shared/src/api/`:
+โปรเจกต์มี API utilities ใน `packages/shared/src/api/`:
 
 ### Quotes API
 
-- `calculate-price.ts` - Calculate quote prices
-- `submit-bulk-quotes.ts` - Submit multiple quotes
-- `get-job-status.ts` - Get job processing status
+- `calculate-price.ts` - คำนวณราคา quote
+- `submit-bulk-quotes.ts` - ส่ง quotes หลายรายการ
+- `get-job-status.ts` - ดึงสถานะการประมวลผล job
 
 ### Rules API
 
-- `get-rules.ts` - Retrieve all rules
-- `get-rule.ts` - Get specific rule
-- `create-rule.ts` - Create new rule
-- `update-rule.ts` - Update existing rule
-- `delete-rule.ts` - Delete rule
+- `get-rules.ts` - ดึงข้อมูล rules ทั้งหมด
+- `get-rule.ts` - ดึงข้อมูล rule เฉพาะ
+- `create-rule.ts` - สร้าง rule ใหม่
+- `update-rule.ts` - อัปเดต rule ที่มีอยู่
+- `delete-rule.ts` - ลบ rule
 
-## 📦 Installation
+## 📦 การติดตั้ง
 
 ```bash
-# Install dependencies
+# ติดตั้ง dependencies
 pnpm install
 
-# Start development server
+# เริ่ม development server
 pnpm dev
 ```
 
-## 🔧 Development
+## 🔧 การพัฒนา
 
-The project uses:
+โปรเจกต์ใช้:
 
-- **Next.js 14** for the app framework
-- **React 18** for UI components
-- **TypeScript 5** for type safety
-- **pnpm** for package management
-- **Turbo** for build system
-- **CSS Modules** for styling
+- **Next.js 14** สำหรับ framework แอปพลิเคชัน
+- **React 18** สำหรับ UI components
+- **TypeScript 5** สำหรับ type safety
+- **pnpm** สำหรับ package management
+- **Turbo** สำหรับ build system
+- **CSS Modules** สำหรับ styling
 
-## 📝 Component Creation
+## 📝 การสร้าง Component
 
-To create new components, follow the established pattern:
+ในการสร้าง components ใหม่ ให้ปฏิบัติตามรูปแบบที่กำหนด:
 
-1. Create component folder: `packages/shared/src/components/[component-name]/`
-2. Create 6 files:
+1. สร้างโฟลเดอร์ component: `packages/shared/src/components/[component-name]/`
+2. สร้าง 6 ไฟล์:
    - `[ComponentName].tsx` - Main component
    - `[ComponentName].module.css` - Styles
    - `types.ts` - TypeScript types
@@ -196,26 +200,14 @@ To create new components, follow the established pattern:
    - `helpers.ts` - Helper functions
    - `index.ts` - Exports
 
-## 🎯 Next Steps
+## 🎯 ขั้นตอนต่อไป
 
-- Expand API integration with custom hooks
-- Create business logic containers
-- Add more shared utilities
-- Set up proper routing structure
-- Add form validation utilities
-
-## 📄 License
-
-Private project for internal use.
-
-## 🎯 Next Steps
-
-- Add API integration with custom hooks
-- Implement authentication screens in core-auth
-- Create business logic containers
-- Add more shared utilities
-- Set up proper routing structure
+- ขยาย API integration ด้วย custom hooks
+- สร้าง business logic containers
+- เพิ่ม shared utilities เพิ่มเติม
+- ตั้งค่าโครงสร้าง routing ที่เหมาะสม
+- เพิ่ม form validation utilities
 
 ## 📄 License
 
-Private project for internal use.
+Private project for internal use
