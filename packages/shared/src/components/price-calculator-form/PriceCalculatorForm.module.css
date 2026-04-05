@@ -1,0 +1,30 @@
+.priceCalculatorForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resultContainer {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.resultTitle {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.resultDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.finalPrice {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}

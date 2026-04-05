@@ -65,10 +65,6 @@
   border: none;
 }
 
-.filled:hover {
-  border: 1px solid #cbd5e1;
-}
-
 .filled:focus-within {
   border: 1px solid #3b82f6;
   border-radius: 8px;

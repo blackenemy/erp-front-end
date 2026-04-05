@@ -10,7 +10,16 @@ export default function HomePage() {
         <h1>ระบบคำนวณราคาขนส่ง</h1>
       </Layout.Header>
       <Layout.Content>
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", justifyContent: "center", minHeight: "80vh" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "2rem",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "80vh",
+          }}
+        >
           <div
             style={{
               cursor: "pointer",
@@ -25,16 +34,41 @@ export default function HomePage() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            <Link href="/th/pricing" style={{ textDecoration: "none", display: "block" }}>
-              <Card variant="elevated" fullWidth>
-                <div style={{ marginBottom: "1rem", textAlign: "center" }}>
-                  <CurrencyDollarIcon style={{ width: "3rem", height: "3rem", color: "#0070f3" }} />
-                </div>
-                <h2 style={{ marginBottom: "0.5rem", color: "#333", textAlign: "center" }}>คำนวณราคาขนส่ง</h2>
-                <p style={{ color: "#666", marginBottom: "1.5rem", textAlign: "center" }}>
-                  คำนวณราคาขนส่งตามน้ำหนักและพื้นที่จัดส่ง
-                </p>
-                <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+            <Card variant="elevated" fullWidth>
+              <div style={{ marginBottom: "1rem", textAlign: "center" }}>
+                <CurrencyDollarIcon
+                  style={{ width: "3rem", height: "3rem", color: "#0070f3" }}
+                />
+              </div>
+              <h2
+                style={{
+                  marginBottom: "0.5rem",
+                  color: "#333",
+                  textAlign: "center",
+                }}
+              >
+                คำนวณราคาขนส่ง
+              </h2>
+              <p
+                style={{
+                  color: "#666",
+                  marginBottom: "1.5rem",
+                  textAlign: "center",
+                }}
+              >
+                คำนวณราคาขนส่งตามน้ำหนักและพื้นที่จัดส่ง
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                }}
+              >
+                <Link
+                  href="/th/pricing"
+                  style={{ textDecoration: "none", display: "block" }}
+                >
                   <button
                     style={{
                       padding: "0.75rem 2rem",
@@ -56,9 +90,9 @@ export default function HomePage() {
                   >
                     เริ่มคำนวณ
                   </button>
-                </div>
-              </Card>
-            </Link>
+                </Link>
+              </div>
+            </Card>
           </div>
         </div>
       </Layout.Content>

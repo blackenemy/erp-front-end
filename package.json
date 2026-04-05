@@ -16,5 +16,8 @@
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.0",
+  "dependencies": {
+    "sonner": "^2.0.7"
+  }
 }

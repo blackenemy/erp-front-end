@@ -29,7 +29,7 @@ export interface RemoteAreaSurchargeRule extends Rule {
   surchargeFlat: number;
 }
 
-export type RuleInput = Omit<Rule, 'id' | '$type'>;
+export type RuleInput = Omit<Rule, 'id'>;
 export type UpdateRuleInput = Partial<RuleInput>;
 
 // Specific input types for each rule type

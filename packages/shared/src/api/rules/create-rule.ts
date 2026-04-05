@@ -15,10 +15,7 @@ import type { Rule, RuleInput } from "./types";
 export async function createRule(input: RuleInput): Promise<Rule> {
   const response = await customFetch("/rules", {
     method: "POST",
-    body: JSON.stringify({
-      ...input,
-      $type: input.type,
-    }),
+    body: JSON.stringify(input),
   });
 
   if (!response.ok) {
