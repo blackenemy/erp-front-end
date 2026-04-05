@@ -43,9 +43,11 @@ jobs:
           # 1. Sync ไฟล์ไปที่เครื่อง 104
           rsync -avz --delete \
             apps/erp/.next/ \
+            apps/erp/node_modules/ \
             package.json \
             pnpm-lock.yaml \
+            ecosystem.config.js \
             root@10.0.0.6:/var/www/hubs-frontend/
 
-          # 2. สั่ง PM2 รีโหลดแอป
-          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && (pm2 reload hubs-frontend || pm2 start npm --name hubs-frontend -- run start)"
+          # 2. สั่ง PM2 รีโหลดแอป (หรือสร้างใหม่ถ้ายังไม่มี)
+          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && pm2 restart hubs-frontend || pm2 start --name hubs-frontend 'node node_modules/.bin/next start'"
