@@ -43,7 +43,6 @@ jobs:
           # 1. Sync ไฟล์ไปที่เครื่อง 104
           rsync -avz --delete \
             apps/erp/.next/ \
-            apps/erp/public/ \
             package.json \
             pnpm-lock.yaml \
             root@10.0.0.6:/var/www/hubs-frontend/
