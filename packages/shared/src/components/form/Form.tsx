@@ -71,7 +71,7 @@ export function FormItem({
         )}
         {children}
         {error && <div className={styles.error}>{error}</div>}
-        {help && <div className={styles.help}>{help}</div>}
+        {!error && help && <div className={styles.help}>{help}</div>}
       </div>
     );
   }
@@ -89,7 +89,7 @@ export function FormItem({
       <div className={styles.wrapper} style={{ flex: context.wrapperCol }}>
         {children}
         {error && <div className={styles.error}>{error}</div>}
-        {help && <div className={styles.help}>{help}</div>}
+        {!error && help && <div className={styles.help}>{help}</div>}
       </div>
     </div>
   );

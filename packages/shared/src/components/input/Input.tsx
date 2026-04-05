@@ -38,7 +38,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             id={inputId}
-            className={styles.input}
+            className={`${styles.input} ${className || ''}`}
             {...props}
           />
           {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}

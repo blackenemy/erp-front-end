@@ -1,0 +1,26 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.selectStyle {
+  width: "100%";
+  padding: "0.5rem";
+  borderRadius: "4px";
+  border: "1px solid #e2e8f0";
+  backgroundColor: "#f7fafc";
+}
+
+.checkboxLabel {
+  display: flex;
+  alignItems: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  marginTop: 1rem;
+}

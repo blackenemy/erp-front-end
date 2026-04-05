@@ -7,6 +7,7 @@
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
     "clean": "pnpm -r clean && rm -rf node_modules"
   },
   "devDependencies": {
@@ -16,5 +17,8 @@
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.10.0"
+  "packageManager": "pnpm@8.10.0",
+  "dependencies": {
+    "sonner": "^2.0.7"
+  }
 }
