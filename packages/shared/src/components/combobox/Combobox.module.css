@@ -45,18 +45,14 @@
 }
 
 .dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-height: 300px;
   overflow-y: auto;
-  z-index: 1000;
-  margin-top: 4px;
+  overflow-x: hidden;
+  z-index: 9999;
 }
 
 .searchInput {
@@ -83,6 +79,7 @@
   padding: 0.5rem 0;
   max-height: 250px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .option {
