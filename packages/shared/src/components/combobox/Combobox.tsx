@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import type { ComboboxProps } from "./types";
 import styles from "./Combobox.module.css";
 
@@ -21,6 +22,8 @@ export default function Combobox<T = string>({
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<T[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
 
   const getDisplayValue = (item: T): string => {
     return displayValue ? displayValue(item) : (item as string);
@@ -30,14 +33,27 @@ export default function Combobox<T = string>({
     return tags ? tags(item) : "";
   };
 
+  const updatePosition = useCallback(() => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setDropdownStyle({
+      position: "absolute",
+      top: rect.bottom + window.scrollY + 4,
+      left: rect.left + window.scrollX,
+      width: rect.width,
+    });
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
       if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        (containerRef.current && containerRef.current.contains(target)) ||
+        (dropdownRef.current && dropdownRef.current.contains(target))
       ) {
-        setIsOpen(false);
+        return;
       }
+      setIsOpen(false);
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -56,6 +72,23 @@ export default function Combobox<T = string>({
       setFilteredOptions(options.slice(0, maxVisibleItems));
     }
   }, [searchTerm, options, maxVisibleItems]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    updatePosition();
+
+    const handleScroll = () => updatePosition();
+    const handleResize = () => updatePosition();
+
+    window.addEventListener("scroll", handleScroll, true);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll, true);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isOpen, updatePosition]);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -183,8 +216,12 @@ export default function Combobox<T = string>({
         </span>
       </div>
 
-      {isOpen && (
-        <div className={styles.dropdown}>
+      {isOpen && createPortal(
+        <div
+          ref={dropdownRef}
+          className={styles.dropdown}
+          style={dropdownStyle}
+        >
           {searchable && (
             <input
               type="text"
@@ -256,7 +293,8 @@ export default function Combobox<T = string>({
               <div className={styles.noResults}>ไม่พบข้อมูล</div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
