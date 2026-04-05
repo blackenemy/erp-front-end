@@ -50,4 +50,4 @@ jobs:
             root@10.0.0.6:/var/www/hubs-frontend/
 
           # 2. สั่ง PM2 รีโหลดแอป (หรือสร้างใหม่ถ้ายังไม่มี)
-          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && pm2 restart hubs-frontend || pm2 start --name hubs-frontend 'node node_modules/.bin/next start'"
+          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && pm2 restart hubs-frontend || pm2 start ecosystem.config.js"
