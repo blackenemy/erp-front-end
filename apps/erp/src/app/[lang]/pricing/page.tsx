@@ -1,19 +1,7 @@
 "use client";
-import {
-  Button,
-  Card,
-  Table,
-  Layout,
-  Badge,
-} from "@repo/shared";
-import {
-  PriceCalculatorForm,
-  RuleModal,
-} from "@repo/shared";
-import {
-  usePriceCalculator,
-  useRuleManagement,
-} from "@repo/shared";
+import { Button, Card, Table, Layout, Badge } from "@repo/shared";
+import { PriceCalculatorForm, RuleModal } from "@repo/shared";
+import { usePriceCalculator, useRuleManagement } from "@repo/shared";
 import type { Rule } from "@repo/shared";
 
 export default function PricingPage() {
@@ -40,7 +28,9 @@ export default function PricingPage() {
       align: "center" as const,
       render: (value: boolean, record: Rule) => (
         <span
-          onClick={() => record.id && ruleManagement.handleToggleRule(record.id)}
+          onClick={() =>
+            record.id && ruleManagement.handleToggleRule(record.id)
+          }
           style={{ cursor: "pointer", display: "inline-block" }}
         >
           <Badge variant={value ? "success" : "default"}>
@@ -54,7 +44,7 @@ export default function PricingPage() {
       title: "จัดการ",
       width: "30%",
       align: "center" as const,
-      render: (_: any, record: Rule) => (
+      render: (_: unknown, record: Rule) => (
         <div
           style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}
         >
@@ -68,7 +58,9 @@ export default function PricingPage() {
           <Button
             variant="danger"
             size="sm"
-            onClick={() => record.id && ruleManagement.handleDeleteRule(record.id)}
+            onClick={() =>
+              record.id && ruleManagement.handleDeleteRule(record.id)
+            }
           >
             ลบ
           </Button>
@@ -95,7 +87,10 @@ export default function PricingPage() {
 
           <Card title="กฎการคิดราคา">
             <div style={{ marginBottom: "1rem", textAlign: "right" }}>
-              <Button variant="primary" onClick={ruleManagement.openCreateModal}>
+              <Button
+                variant="primary"
+                onClick={ruleManagement.openCreateModal}
+              >
                 เพิ่มกฎใหม่
               </Button>
             </div>
