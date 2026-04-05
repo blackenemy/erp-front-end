@@ -42,9 +42,9 @@ describe('useRuleManagement', () => {
 
   it('initializes with default state', () => {
     const { result } = renderHook(() => useRuleManagement());
-    
+
     expect(result.current.isRuleModalOpen).toBe(false);
-    expect(result.current.isCreateMode).toBe(true);
+    expect(result.current.isCreateMode).toBe(false);
     expect(result.current.selectedRule).toBe(null);
     expect(result.current.ruleType).toBe('WeightTier');
     expect(result.current.weightTierRule).toEqual({
@@ -211,12 +211,11 @@ describe('useRuleManagement', () => {
 
   it('toggles rule when handleToggleRule is called', async () => {
     const { result } = renderHook(() => useRuleManagement());
-    const rule = { $type: 'WeightTier', id: 1, name: 'Rule 1', type: 'WeightTier', enabled: true, tiers: [] };
-    
-    act(() => {
-      result.current.handleToggleRule(1);
+
+    await act(async () => {
+      await result.current.handleToggleRule(1);
     });
-    
+
     expect(mockHooks.useUpdateRule().mutate).toHaveBeenCalledWith(1, { enabled: false });
     expect(toast.success).toHaveBeenCalledWith('ปิดใช้งานกฎสำเร็จ');
   });

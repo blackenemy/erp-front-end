@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import usePriceCalculator from './use-price-calculator';
 
-jest.mock('../../api');
+jest.mock('../api');
 jest.mock('sonner', () => ({
   toast: {
     success: jest.fn(),
@@ -9,7 +9,7 @@ jest.mock('sonner', () => ({
   },
 }));
 
-const mockUseCalculatePrice = require('../../api').useCalculatePrice;
+const mockUseCalculatePrice = require('../api').useCalculatePrice;
 const { toast } = require('sonner');
 
 describe('usePriceCalculator', () => {

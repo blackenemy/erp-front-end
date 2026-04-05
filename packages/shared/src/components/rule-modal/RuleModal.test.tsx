@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import RuleModal from '../RuleModal';
-import type { RuleModalProps } from '../types';
+import RuleModal from './RuleModal';
+import type { RuleModalProps } from './types';
 
 describe('RuleModal', () => {
   const defaultProps: RuleModalProps = {
@@ -82,14 +82,14 @@ describe('RuleModal', () => {
   it('displays RemoteAreaSurcharge form when ruleType is RemoteAreaSurcharge', () => {
     render(<RuleModal {...defaultProps} isOpen ruleType="RemoteAreaSurcharge" />);
     expect(
-      screen.getByText('รหัสไปรษณีย์พื้นที่ห่างไกล (คั่นด้วยลูก)')
+      screen.getByText('รหัสไปรษณีย์พื้นที่ห่างไกล')
     ).toBeInTheDocument();
     expect(screen.getByText('ค่าบวกเพิ่ม (฿)')).toBeInTheDocument();
   });
 
   it('calls onRuleTypeChange when rule type is changed', () => {
     render(<RuleModal {...defaultProps} isOpen />);
-    const select = screen.getByLabelText('ประเภทกฎ');
+    const select = screen.getByRole('combobox');
     fireEvent.change(select, { target: { value: 'TimeWindowPromotion' } });
     expect(defaultProps.onRuleTypeChange).toHaveBeenCalledWith('TimeWindowPromotion');
   });

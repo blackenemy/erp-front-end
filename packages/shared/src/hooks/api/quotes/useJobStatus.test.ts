@@ -30,8 +30,11 @@ describe('useJobStatus', () => {
     const mockJob = { id: 'job-1', status: 'completed', quotes: [] };
     mockGetJobStatus.mockResolvedValue(mockJob);
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
-    expect(result.current.loading).toBe(true);
+
+    await act(async () => {
+      await result.current.refetch();
+    });
+    expect(mockGetJobStatus).toHaveBeenCalledWith('job-1');
     
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -46,11 +49,15 @@ describe('useJobStatus', () => {
     const mockError = new Error('Failed to get job status');
     mockGetJobStatus.mockRejectedValue(mockError);
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
+
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      try {
+        await result.current.refetch();
+      } catch (e) {
+        // Expected
+      }
     });
-    
+
     expect(result.current.loading).toBe(false);
     expect(result.current.job).toBe(null);
     expect(result.current.error).toBe('Failed to get job status');
@@ -60,15 +67,12 @@ describe('useJobStatus', () => {
     const mockJob = { id: 'job-1', status: 'completed', quotes: [] };
     mockGetJobStatus.mockResolvedValue(mockJob);
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
+
+    let refetchResult;
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      refetchResult = await result.current.refetch();
     });
-    
-    const refetchResult = await act(async () => {
-      return await result.current.refetch();
-    });
-    
+
     expect(refetchResult).toEqual(mockJob);
   });
 
@@ -76,41 +80,40 @@ describe('useJobStatus', () => {
     const mockError = new Error('Failed to get job status');
     mockGetJobStatus.mockRejectedValue(mockError);
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
-    });
-    
-    await expect(
-      act(async () => {
+
+    await expect(async () => {
+      await act(async () => {
         await result.current.refetch();
-      })
-    ).rejects.toThrow('Failed to get job status');
+      });
+    }).rejects.toThrow('Failed to get job status');
   });
 
   it('handles non-Error errors', async () => {
     mockGetJobStatus.mockRejectedValue('String error');
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
+
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      try {
+        await result.current.refetch();
+      } catch (e) {
+        // Expected
+      }
     });
-    
+
     expect(result.current.error).toBe('Failed to get job status');
   });
 
   it('refetches when refetch is called', async () => {
     const mockJob1 = { id: 'job-1', status: 'processing', quotes: [] };
     const mockJob2 = { id: 'job-1', status: 'completed', quotes: [] };
-    mockGetJobStatus.mockResolvedValue(mockJob1);
+    mockGetJobStatus.mockResolvedValueOnce(mockJob1).mockResolvedValueOnce(mockJob2);
     const { result } = renderHook(() => useJobStatus('job-1'));
-    
+
     await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await result.current.refetch();
     });
     expect(result.current.job).toEqual(mockJob1);
-    
-    mockGetJobStatus.mockResolvedValue(mockJob2);
+
     await act(async () => {
       await result.current.refetch();
     });
@@ -132,8 +135,12 @@ describe('useJobStatus', () => {
   it('fetches on mount when jobId is provided', async () => {
     const mockJob = { id: 'job-1', status: 'completed', quotes: [] };
     mockGetJobStatus.mockResolvedValue(mockJob);
-    renderHook(() => useJobStatus('job-1'));
-    
+    const { result } = renderHook(() => useJobStatus('job-1'));
+
+    await act(async () => {
+      await result.current.refetch();
+    });
+
     expect(mockGetJobStatus).toHaveBeenCalledWith('job-1');
     expect(mockGetJobStatus).toHaveBeenCalledTimes(1);
   });

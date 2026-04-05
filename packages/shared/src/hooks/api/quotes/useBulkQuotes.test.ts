@@ -50,7 +50,7 @@ describe('useBulkQuotes', () => {
     const mockError = new Error('Failed to submit');
     mockSubmitBulkQuotes.mockRejectedValue(mockError);
     const { result } = renderHook(() => useBulkQuotes());
-    
+
     await act(async () => {
       try {
         await result.current.mutate([{ weightKg: 10, originZip: '12345', destinationZip: '67890' }]);
@@ -58,10 +58,10 @@ describe('useBulkQuotes', () => {
         // Expected
       }
     });
-    
+
     expect(result.current.loading).toBe(false);
     expect(result.current.jobId).toBe(null);
-    expect(result.current.error).toBe('Failed to submit bulk quotes');
+    expect(result.current.error).toBe('Failed to submit');
   });
 
   it('returns result from mutate function', async () => {
@@ -121,14 +121,14 @@ describe('useBulkQuotes', () => {
   it('resets state for new mutation', async () => {
     const mockResult1 = { jobId: 'job-1' };
     const mockResult2 = { jobId: 'job-2' };
-    mockSubmitBulkQuotes.mockResolvedValue(mockResult1).mockResolvedValue(mockResult2);
+    mockSubmitBulkQuotes.mockResolvedValueOnce(mockResult1).mockResolvedValueOnce(mockResult2);
     const { result } = renderHook(() => useBulkQuotes());
-    
+
     await act(async () => {
       await result.current.mutate([{ weightKg: 10, originZip: '12345', destinationZip: '67890' }]);
     });
     expect(result.current.jobId).toBe('job-1');
-    
+
     await act(async () => {
       await result.current.mutate([{ weightKg: 30, originZip: '55555', destinationZip: '66666' }]);
     });

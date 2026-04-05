@@ -120,14 +120,14 @@ describe('useCalculatePrice', () => {
   it('resets state for new mutation', async () => {
     const mockResult1 = { total: 500, currency: 'THB' };
     const mockResult2 = { total: 600, currency: 'THB' };
-    mockCalculatePrice.mockResolvedValue(mockResult1).mockResolvedValue(mockResult2);
+    mockCalculatePrice.mockResolvedValueOnce(mockResult1).mockResolvedValueOnce(mockResult2);
     const { result } = renderHook(() => useCalculatePrice());
-    
+
     await act(async () => {
       await result.current.mutate({ weightKg: 10, originZip: '12345', destinationZip: '67890' });
     });
     expect(result.current.result).toEqual(mockResult1);
-    
+
     await act(async () => {
       await result.current.mutate({ weightKg: 20, originZip: '54321', destinationZip: '09876' });
     });

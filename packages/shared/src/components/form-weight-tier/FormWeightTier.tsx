@@ -88,7 +88,7 @@ function FormWeightTier({
               <input
                 id={`tier-${index}-min`}
                 type="number"
-                value={tier.minKg || ""}
+                value={tier.minKg === 0 ? 0 : tier.minKg || ""}
                 onChange={handleInputChange(index, "minKg")}
                 placeholder="0"
                 disabled={disabled}
@@ -102,7 +102,7 @@ function FormWeightTier({
               <input
                 id={`tier-${index}-max`}
                 type="number"
-                value={tier.maxKg || ""}
+                value={tier.maxKg === 0 ? 0 : tier.maxKg || ""}
                 onChange={handleInputChange(index, "maxKg")}
                 placeholder="0"
                 disabled={disabled}
@@ -116,7 +116,7 @@ function FormWeightTier({
               <input
                 id={`tier-${index}-price`}
                 type="number"
-                value={tier.pricePerKg || ""}
+                value={tier.pricePerKg === 0 ? 0 : tier.pricePerKg || ""}
                 onChange={handleInputChange(index, "pricePerKg")}
                 placeholder="0"
                 disabled={disabled}

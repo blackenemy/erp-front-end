@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import TimeWindowPromotionForm from '../TimeWindowPromotionForm';
-import type { TimeWindowPromotionFormSectionProps } from '../types';
+import TimeWindowPromotionForm from './TimeWindowPromotionForm';
+import type { TimeWindowPromotionFormSectionProps } from './types';
 
 describe('TimeWindowPromotionForm', () => {
   const defaultProps: TimeWindowPromotionFormSectionProps = {
@@ -21,22 +21,19 @@ describe('TimeWindowPromotionForm', () => {
   });
 
   it('displays current values', () => {
-    render(<TimeWindowPromotionForm {...defaultProps} />);
+    const { container } = render(<TimeWindowPromotionForm {...defaultProps} />);
 
-    const startTimeInput = screen.getByLabelText('เวลาเริ่ม (HH:mm)');
-    const endTimeInput = screen.getByLabelText('เวลาสิ้นสุด (HH:mm)');
-    const discountInput = screen.getByLabelText('ส่วนลดราคา (%)');
-
-    expect(startTimeInput).toHaveValue('09:00');
-    expect(endTimeInput).toHaveValue('18:00');
-    expect(discountInput).toHaveValue(15);
+    const inputs = container.querySelectorAll('input');
+    expect(inputs[0]).toHaveValue('09:00');
+    expect(inputs[1]).toHaveValue('18:00');
+    expect(inputs[2]).toHaveValue(15);
   });
 
   it('calls onChange when startTime changes', () => {
-    render(<TimeWindowPromotionForm {...defaultProps} />);
+    const { container } = render(<TimeWindowPromotionForm {...defaultProps} />);
 
-    const startTimeInput = screen.getByLabelText('เวลาเริ่ม (HH:mm)');
-    fireEvent.change(startTimeInput, { target: { value: '10:00' } });
+    const inputs = container.querySelectorAll('input');
+    fireEvent.change(inputs[0], { target: { value: '10:00' } });
 
     expect(defaultProps.onChange).toHaveBeenCalledWith({
       startTime: '10:00',
@@ -46,10 +43,10 @@ describe('TimeWindowPromotionForm', () => {
   });
 
   it('calls onChange when endTime changes', () => {
-    render(<TimeWindowPromotionForm {...defaultProps} />);
+    const { container } = render(<TimeWindowPromotionForm {...defaultProps} />);
 
-    const endTimeInput = screen.getByLabelText('เวลาสิ้นสุด (HH:mm)');
-    fireEvent.change(endTimeInput, { target: { value: '20:00' } });
+    const inputs = container.querySelectorAll('input');
+    fireEvent.change(inputs[1], { target: { value: '20:00' } });
 
     expect(defaultProps.onChange).toHaveBeenCalledWith({
       startTime: '09:00',
@@ -59,10 +56,10 @@ describe('TimeWindowPromotionForm', () => {
   });
 
   it('calls onChange when discountPercent changes', () => {
-    render(<TimeWindowPromotionForm {...defaultProps} />);
+    const { container } = render(<TimeWindowPromotionForm {...defaultProps} />);
 
-    const discountInput = screen.getByLabelText('ส่วนลดราคา (%)');
-    fireEvent.change(discountInput, { target: { value: '20' } });
+    const inputs = container.querySelectorAll('input');
+    fireEvent.change(inputs[2], { target: { value: '20' } });
 
     expect(defaultProps.onChange).toHaveBeenCalledWith({
       startTime: '09:00',

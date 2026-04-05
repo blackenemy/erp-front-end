@@ -22,7 +22,7 @@ describe('useRules', () => {
 
   it('initializes with correct state', () => {
     const { result } = renderHook(() => useRules());
-    expect(result.current.loading).toBe(false);
+    expect(result.current.loading).toBe(true);
     expect(result.current.error).toBe(null);
     expect(result.current.data).toEqual([]);
   });

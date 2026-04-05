@@ -4,9 +4,9 @@ import type { QuoteRequest, QuoteResult } from "./types";
 
 describe("PriceCalculatorForm", () => {
   const mockQuoteRequest: QuoteRequest = {
-    weightKg: 0,
-    originZip: "",
-    destinationZip: "",
+    weightKg: 10,
+    originZip: "10100",
+    destinationZip: "10200",
   };
 
   const mockQuoteResult: QuoteResult = {
