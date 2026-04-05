@@ -9,7 +9,7 @@
     "paths": {
       "@repo/shared/*": ["./src/*"]
     },
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": ["global.d.ts", "src/**/*"],
   "exclude": ["node_modules", "dist", "**/__tests__/**", "**/*.test.*"]
