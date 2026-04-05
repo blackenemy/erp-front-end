@@ -6,6 +6,8 @@ export const RULE_MODAL_LABELS = {
   STATUS: "สถานะ",
   ENABLED: "เปิดใช้งาน",
   DISABLED: "ปิดใช้งาน",
+  EFFECTIVE_FROM: "วันที่เริ่มใช้งาน",
+  EFFECTIVE_TO: "วันที่สิ้นสุดใช้งาน",
   SAVE: "บันทึก",
   UPDATE: "อัพเดต",
   CANCEL: "ยกเลิก",
@@ -28,4 +30,10 @@ export const RULE_TYPE_OPTIONS = {
 
 export const RULE_MODAL_PLACEHOLDERS = {
   RULE_NAME: "กรอกชื่อกฎ",
+  EFFECTIVE_FROM: "เช่น 2026-01-01",
+  EFFECTIVE_TO: "เช่น 2099-12-31",
+} as const;
+
+export const RULE_MODAL_ERRORS = {
+  EFFECTIVE_DATE_RANGE: "วันที่เริ่มต้องน้อยกว่าหรือเท่ากับวันที่สิ้นสุด",
 } as const;

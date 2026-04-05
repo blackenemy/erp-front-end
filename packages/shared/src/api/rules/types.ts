@@ -7,10 +7,14 @@ export interface Rule {
   id?: string | number;
   name: string;
   type: string;
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string | null;
+  effective_to: string | null;
 }
 
 export interface WeightTierRule extends Rule {
+  effective_from: string | null;
+  effective_to: string | null;
   tiers: {
     minKg: number;
     maxKg: number;
@@ -19,12 +23,16 @@ export interface WeightTierRule extends Rule {
 }
 
 export interface TimeWindowPromotionRule extends Rule {
+  effective_from: string | null;
+  effective_to: string | null;
   startTime: string;
   endTime: string;
   discountPercent: number;
 }
 
 export interface RemoteAreaSurchargeRule extends Rule {
+  effective_from: string | null;
+  effective_to: string | null;
   remoteZipPrefixes: string[];
   surchargeFlat: number;
 }
@@ -34,9 +42,12 @@ export type UpdateRuleInput = Partial<RuleInput>;
 
 // Specific input types for each rule type
 export interface WeightTierRuleInput {
+  $type: 'WeightTier';
   name: string;
   type: 'WeightTier';
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string | null;
+  effective_to: string | null;
   tiers: {
     minKg: number;
     maxKg: number;
@@ -45,18 +56,24 @@ export interface WeightTierRuleInput {
 }
 
 export interface TimeWindowPromotionRuleInput {
+  $type: 'TimeWindowPromotion';
   name: string;
   type: 'TimeWindowPromotion';
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string | null;
+  effective_to: string | null;
   startTime: string;
   endTime: string;
   discountPercent: number;
 }
 
 export interface RemoteAreaSurchargeRuleInput {
+  $type: 'RemoteAreaSurcharge';
   name: string;
   type: 'RemoteAreaSurcharge';
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string | null;
+  effective_to: string | null;
   remoteZipPrefixes: string[];
   surchargeFlat: number;
 }

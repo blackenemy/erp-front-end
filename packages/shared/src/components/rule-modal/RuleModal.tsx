@@ -1,4 +1,4 @@
-import { Modal, Input, Form, FormItem, Button } from "../../index";
+import { Modal, Input, Form, FormItem, Button, DatePicker } from "../../index";
 import FormWeightTier from "../form-weight-tier";
 import TimeWindowPromotionForm from "../time-window-promotion-form";
 import RemoteAreaSurchargeForm from "../remote-area-surcharge-form";
@@ -53,13 +53,65 @@ export default function RuleModal({
   const handleEnabledChange = (enabled: boolean) => {
     switch (ruleType) {
       case "WeightTier":
-        onWeightTierRuleChange({ ...weightTierRule, enabled });
+        onWeightTierRuleChange({ ...weightTierRule, is_active: enabled });
         break;
       case "TimeWindowPromotion":
-        onTimeWindowRuleChange({ ...timeWindowRule, enabled });
+        onTimeWindowRuleChange({ ...timeWindowRule, is_active: enabled });
         break;
       case "RemoteAreaSurcharge":
-        onRemoteAreaRuleChange({ ...remoteAreaRule, enabled });
+        onRemoteAreaRuleChange({ ...remoteAreaRule, is_active: enabled });
+        break;
+    }
+  };
+
+  const getEffectiveFromDate = () => {
+    switch (ruleType) {
+      case "WeightTier":
+        return weightTierRule.effective_from;
+      case "TimeWindowPromotion":
+        return timeWindowRule.effective_from;
+      case "RemoteAreaSurcharge":
+        return remoteAreaRule.effective_from;
+    }
+  };
+
+  const getEffectiveToDate = () => {
+    switch (ruleType) {
+      case "WeightTier":
+        return weightTierRule.effective_to;
+      case "TimeWindowPromotion":
+        return timeWindowRule.effective_to;
+      case "RemoteAreaSurcharge":
+        return remoteAreaRule.effective_to;
+    }
+  };
+
+  const handleEffectiveFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    switch (ruleType) {
+      case "WeightTier":
+        onWeightTierRuleChange({ ...weightTierRule, effective_from: value });
+        break;
+      case "TimeWindowPromotion":
+        onTimeWindowRuleChange({ ...timeWindowRule, effective_from: value });
+        break;
+      case "RemoteAreaSurcharge":
+        onRemoteAreaRuleChange({ ...remoteAreaRule, effective_from: value });
+        break;
+    }
+  };
+
+  const handleEffectiveToChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    switch (ruleType) {
+      case "WeightTier":
+        onWeightTierRuleChange({ ...weightTierRule, effective_to: value });
+        break;
+      case "TimeWindowPromotion":
+        onTimeWindowRuleChange({ ...timeWindowRule, effective_to: value });
+        break;
+      case "RemoteAreaSurcharge":
+        onRemoteAreaRuleChange({ ...remoteAreaRule, effective_to: value });
         break;
     }
   };
@@ -67,11 +119,11 @@ export default function RuleModal({
   const getEnabled = () => {
     switch (ruleType) {
       case "WeightTier":
-        return weightTierRule.enabled;
+        return weightTierRule.is_active;
       case "TimeWindowPromotion":
-        return timeWindowRule.enabled;
+        return timeWindowRule.is_active;
       case "RemoteAreaSurcharge":
-        return remoteAreaRule.enabled;
+        return remoteAreaRule.is_active;
     }
   };
 
@@ -137,6 +189,24 @@ export default function RuleModal({
                 : RULE_MODAL_LABELS.DISABLED}
             </span>
           </label>
+        </FormItem>
+
+        <FormItem label={RULE_MODAL_LABELS.EFFECTIVE_FROM}>
+          <DatePicker
+            variant="filled"
+            value={getEffectiveFromDate()}
+            onChange={handleEffectiveFromChange}
+            placeholder={RULE_MODAL_PLACEHOLDERS.EFFECTIVE_FROM}
+          />
+        </FormItem>
+
+        <FormItem label={RULE_MODAL_LABELS.EFFECTIVE_TO}>
+          <DatePicker
+            variant="filled"
+            value={getEffectiveToDate()}
+            onChange={handleEffectiveToChange}
+            placeholder={RULE_MODAL_PLACEHOLDERS.EFFECTIVE_TO}
+          />
         </FormItem>
 
         {ruleType === "WeightTier" && (

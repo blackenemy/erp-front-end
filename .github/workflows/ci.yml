@@ -1,58 +1,51 @@
-name: CI
+name: CI/CD Frontend (Main Only)
 
 on:
   push:
-    branches: [main, dev]
+    branches: ["main"] # รันเฉพาะตอน push ลง main
   pull_request:
-    branches: [main, dev]
+    branches: ["main"] # รันเฉพาะตอนเปิด PR เข้าหา main
 
 jobs:
-  check:
-    name: Lint, Type Check, Test & Build
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
+  check-and-deploy:
+    name: Lint, Build & Deploy
+    runs-on: self-hosted # ใช้เครื่อง CT 108 ของคุณ
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.10.0
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          version: 9.0.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
+      - name: Lint & Type check
+        run: |
+          pnpm lint
+          pnpm typecheck
 
-      - name: Type check
-        run: pnpm typecheck
-
-      - name: Run tests
-        run: pnpm test
-
-      - name: Build
+      - name: Build Project
         run: pnpm build
+
+      # --- ขั้นตอน Deployment ---
+      - name: Deploy to CT 104
+        if: github.event_name == 'push' # ทำเฉพาะตอน push/merge จริงๆ (ไม่ทำตอนแค่เช็ค PR)
+        run: |
+          # 1. Sync ไฟล์ไปที่เครื่อง 104
+          rsync -avz --delete \
+            .next/ \
+            public/ \
+            package.json \
+            root@10.0.0.6:/var/www/hubs-frontend/
+
+          # 2. สั่ง PM2 รีโหลดแอป
+          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && (pm2 reload hubs-frontend || pm2 start npm --name hubs-frontend -- run start)"

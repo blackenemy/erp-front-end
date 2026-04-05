@@ -23,14 +23,18 @@ export default function useRuleManagement() {
   const [weightTierRule, setWeightTierRule] = useState<WeightTierRuleData>({
     name: "",
     type: "WeightTier",
-    enabled: true,
+    is_active: true,
+    effective_from: "",
+    effective_to: "",
     tiers: [],
   });
   const [timeWindowRule, setTimeWindowRule] =
     useState<TimeWindowPromotionRuleData>({
       name: "",
       type: "TimeWindowPromotion",
-      enabled: true,
+      is_active: true,
+      effective_from: "",
+      effective_to: "",
       startTime: "",
       endTime: "",
       discountPercent: 0,
@@ -39,7 +43,9 @@ export default function useRuleManagement() {
     useState<RemoteAreaSurchargeRuleData>({
       name: "",
       type: "RemoteAreaSurcharge",
-      enabled: true,
+      is_active: true,
+      effective_from: "",
+      effective_to: "",
       remoteZipPrefixes: [],
       surchargeFlat: 0,
     });
@@ -57,13 +63,17 @@ export default function useRuleManagement() {
     setWeightTierRule({
       name: "",
       type: "WeightTier",
-      enabled: true,
+      is_active: true,
+      effective_from: "",
+      effective_to: "",
       tiers: [],
     });
     setTimeWindowRule({
       name: "",
       type: "TimeWindowPromotion",
-      enabled: true,
+      is_active: true,
+      effective_from: "",
+      effective_to: "",
       startTime: "",
       endTime: "",
       discountPercent: 0,
@@ -71,7 +81,9 @@ export default function useRuleManagement() {
     setRemoteAreaRule({
       name: "",
       type: "RemoteAreaSurcharge",
-      enabled: true,
+      is_active: true,
+      effective_from: "",
+      effective_to: "",
       remoteZipPrefixes: [],
       surchargeFlat: 0,
     });
@@ -91,12 +103,27 @@ export default function useRuleManagement() {
     }
   };
 
+  const validateRuleDates = () => {
+    const ruleData = getRuleData();
+
+    if (ruleData.effective_from && ruleData.effective_to) {
+      if (ruleData.effective_from > ruleData.effective_to) {
+        toast.error("วันที่เริ่มต้องน้อยกว่าหรือเท่ากับวันที่สิ้นสุด");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleCreateRule = async () => {
     const ruleData = getRuleData();
     if (!ruleData.name) {
       toast.error("กรุณากรอกชื่อกฎ");
       return;
     }
+
+    if (!validateRuleDates()) return;
 
     console.log("Sending payload:", JSON.stringify(ruleData, null, 2));
 
@@ -121,6 +148,8 @@ export default function useRuleManagement() {
       return;
     }
 
+    if (!validateRuleDates()) return;
+
     console.log("Updating payload:", JSON.stringify(ruleData, null, 2));
 
     try {
@@ -144,7 +173,9 @@ export default function useRuleManagement() {
       setWeightTierRule({
         name: wtRule.name,
         type: "WeightTier",
-        enabled: wtRule.enabled,
+        is_active: wtRule.is_active,
+        effective_from: wtRule.effective_from || "",
+        effective_to: wtRule.effective_to || "",
         tiers: wtRule.tiers,
       });
       setRuleType("WeightTier");
@@ -153,7 +184,9 @@ export default function useRuleManagement() {
       setTimeWindowRule({
         name: twRule.name,
         type: "TimeWindowPromotion",
-        enabled: twRule.enabled,
+        is_active: twRule.is_active,
+        effective_from: twRule.effective_from || "",
+        effective_to: twRule.effective_to || "",
         startTime: twRule.startTime,
         endTime: twRule.endTime,
         discountPercent: twRule.discountPercent,
@@ -164,7 +197,9 @@ export default function useRuleManagement() {
       setRemoteAreaRule({
         name: raRule.name,
         type: "RemoteAreaSurcharge",
-        enabled: raRule.enabled,
+        is_active: raRule.is_active,
+        effective_from: raRule.effective_from || "",
+        effective_to: raRule.effective_to || "",
         remoteZipPrefixes: raRule.remoteZipPrefixes,
         surchargeFlat: raRule.surchargeFlat,
       });
@@ -179,10 +214,10 @@ export default function useRuleManagement() {
     const rule = rules.find((r) => r.id === id);
     if (rule) {
       try {
-        await updateRule.mutate(id, { enabled: !rule.enabled });
+        await updateRule.mutate(id, { is_active: !rule.is_active });
         refetchRules();
         toast.success(
-          rule.enabled ? "ปิดใช้งานกฎสำเร็จ" : "เปิดใช้งานกฎสำเร็จ"
+          rule.is_active ? "ปิดใช้งานกฎสำเร็จ" : "เปิดใช้งานกฎสำเร็จ"
         );
       } catch (error) {
         console.error("Failed to toggle rule:", error);
