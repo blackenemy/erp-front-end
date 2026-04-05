@@ -40,20 +40,27 @@ jobs:
       - name: Deploy to CT 104
         if: github.event_name == 'push'
         run: |
-          # 1. นิยามตำแหน่งไฟล์ (ปรับตามโครงสร้างของคุณ)
+          # 1. ตั้งค่าตัวแปรเพื่อลดความผิดพลาด
           APP_NAME="erp"
-          STANDALONE_PATH="apps/$APP_NAME/.next/standalone"
+          DEST_DIR="/var/www/hubs-frontend"
+          STANDALONE_DIR="apps/$APP_NAME/.next/standalone"
 
-          # 2. ส่งไฟล์หลัก (Server + Node Modules ที่จำเป็น) 
-          # ส่ง "เนื้อหา" ใน standalone ไปที่ root ของเว็บ
-          rsync -avz --delete $STANDALONE_PATH/ root@10.0.0.6:/var/www/hubs-frontend/
+          # 2. ส่งไฟล์หลักจาก Standalone (server.js และ node_modules)
+          # ใช้เครื่องหมาย / ท้าย path เพื่อก๊อปปี้เฉพาะเนื้อหาข้างในไปวางที่ root
+          rsync -avz --delete $STANDALONE_DIR/ root@10.0.0.6:$DEST_DIR/
 
-          # 3. [แก้ไขเรื่อง CSS] ส่งไฟล์ Static และ Public ไปที่ตำแหน่งที่ server.js มองหา
-          # Next.js standalone จะมองหาไฟล์ที่ apps/ชื่อแอป/...
-          mkdir -p apps/$APP_NAME/.next/
-          rsync -avz --delete apps/$APP_NAME/.next/static/ root@10.0.0.6:/var/www/hubs-frontend/apps/$APP_NAME/.next/static/
-          rsync -avz --delete apps/$APP_NAME/public/ root@10.0.0.6:/var/www/hubs-frontend/apps/$APP_NAME/public/
+          # 3. [แก้ปัญหา CSS] ส่งไฟล์ Static (CSS/JS)
+          # Next.js standalone จะมองหาไฟล์ที่ <root>/apps/<app_name>/.next/static
+          ssh root@10.0.0.6 "mkdir -p $DEST_DIR/apps/$APP_NAME/.next/static"
+          rsync -avz --delete apps/$APP_NAME/.next/static/ root@10.0.0.6:$DEST_DIR/apps/$APP_NAME/.next/static/
 
-          # 4. สั่ง PM2 รีโหลดแอปโดยรันไฟล์ server.js ตรงๆ
-          # ไม่ต้อง pnpm install ที่เครื่องปลายทางแล้ว เพราะ standalone เตรียมมาให้หมดแล้ว
-          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && (pm2 reload hubs-frontend || pm2 start apps/$APP_NAME/server.js --name hubs-frontend)"
+          # 4. [แก้ Error 23] ส่งไฟล์ Public (ตรวจสอบก่อนว่ามีโฟลเดอร์ไหม)
+          if [ -d "apps/$APP_NAME/public" ]; then
+            ssh root@10.0.0.6 "mkdir -p $DEST_DIR/apps/$APP_NAME/public"
+            rsync -avz --delete apps/$APP_NAME/public/ root@10.0.0.6:$DEST_DIR/apps/$APP_NAME/public/
+          else
+            echo "⚠️ Skip syncing public folder: Directory not found"
+          fi
+
+          # 5. สั่ง PM2 รีสตาร์ท (ใช้ Path ที่รันมือแล้วผ่านเมื่อกี้)
+          ssh root@10.0.0.6 "cd $DEST_DIR && (pm2 reload hubs-frontend || pm2 start apps/$APP_NAME/server.js --name hubs-frontend)"
