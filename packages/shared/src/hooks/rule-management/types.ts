@@ -3,7 +3,9 @@ export type RuleType = "WeightTier" | "TimeWindowPromotion" | "RemoteAreaSurchar
 export interface WeightTierRuleData {
   name: string;
   type: "WeightTier";
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string;
+  effective_to: string;
   tiers: {
     minKg: number;
     maxKg: number;
@@ -14,7 +16,9 @@ export interface WeightTierRuleData {
 export interface TimeWindowPromotionRuleData {
   name: string;
   type: "TimeWindowPromotion";
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string;
+  effective_to: string;
   startTime: string;
   endTime: string;
   discountPercent: number;
@@ -23,7 +27,9 @@ export interface TimeWindowPromotionRuleData {
 export interface RemoteAreaSurchargeRuleData {
   name: string;
   type: "RemoteAreaSurcharge";
-  enabled: boolean;
+  is_active: boolean;
+  effective_from: string;
+  effective_to: string;
   remoteZipPrefixes: string[];
   surchargeFlat: number;
 }

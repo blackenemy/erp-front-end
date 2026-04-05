@@ -22,7 +22,7 @@ export default function PricingPage() {
       align: "center" as const,
     },
     {
-      key: "enabled" as const,
+      key: "is_active" as const,
       title: "สถานะ",
       width: "20%",
       align: "center" as const,

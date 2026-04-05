@@ -1,0 +1,113 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1a202c;
+  margin-bottom: 0.25rem;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.inputWrapper.default {
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.inputWrapper.default:hover {
+  border-color: #cbd5e0;
+}
+
+.inputWrapper.default:focus-within {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.inputWrapper.outlined {
+  border: 2px solid #e2e8f0;
+  background-color: transparent;
+}
+
+.inputWrapper.outlined:hover {
+  border-color: #cbd5e0;
+}
+
+.inputWrapper.outlined:focus-within {
+  border-color: #4299e1;
+}
+
+.inputWrapper.filled {
+  border: 1px solid #e2e8f0;
+  background-color: #f7fafc;
+}
+
+.inputWrapper.filled:hover {
+  background-color: #edf2f7;
+}
+
+.inputWrapper.filled:focus-within {
+  background-color: #ffffff;
+  border-color: #4299e1;
+}
+
+.inputWrapper.error {
+  border-color: #e53e3e !important;
+}
+
+.inputWrapper.error:focus-within {
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.leftIcon {
+  position: absolute;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  color: #718096;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  font-size: 0.875rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1a202c;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  color: #a0aec0;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.message {
+  font-size: 0.75rem;
+  color: #718096;
+  margin-top: 0.25rem;
+}
+
+.message.error {
+  color: #e53e3e;
+}

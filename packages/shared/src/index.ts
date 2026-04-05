@@ -52,6 +52,8 @@ export type {
 } from './components/rule-modal';
 export { default as Combobox } from './components/combobox';
 export type { ComboboxProps } from './components/combobox';
+export { DatePicker } from './components/date-picker';
+export type { DatePickerProps, DatePickerVariants } from './components/date-picker';
 export { THAI_POSTAL_CODES } from './data/postal-codes';
 
 export * from './api';
