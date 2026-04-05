@@ -40,14 +40,33 @@ jobs:
       - name: Deploy to CT 104
         if: github.event_name == 'push' # ทำเฉพาะตอน push/merge จริงๆ (ไม่ทำตอนแค่เช็ค PR)
         run: |
-          # 1. Sync ไฟล์ไปที่เครื่อง 104
+          # 1. Sync ไฟล์ที่ build มาไปที่เครื่อง 104
           rsync -avz --delete \
+            --exclude='node_modules' \
+            --exclude='.next/cache' \
             apps/erp/.next/ \
-            apps/erp/node_modules/ \
+            root@10.0.0.6:/var/www/hubs-frontend/.next/
+
+          # 2. Sync package files และ ecosystem config
+          rsync -avz \
             package.json \
             pnpm-lock.yaml \
+            pnpm-workspace.yaml \
             ecosystem.config.js \
             root@10.0.0.6:/var/www/hubs-frontend/
 
-          # 2. สั่ง PM2 รีโหลดแอป (หรือสร้างใหม่ถ้ายังไม่มี)
-          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && pm2 restart hubs-frontend || pm2 start ecosystem.config.js"
+          # 3. Sync apps directory structure (ยกเว้น node_modules)
+          rsync -avz --delete \
+            --exclude='node_modules' \
+            apps/ \
+            root@10.0.0.6:/var/www/hubs-frontend/apps/
+
+          # 4. Sync packages directory structure (ยกเว้น node_modules และ coverage)
+          rsync -avz --delete \
+            --exclude='node_modules' \
+            --exclude='coverage' \
+            packages/ \
+            root@10.0.0.6:/var/www/hubs-frontend/packages/
+
+          # 5. Install dependencies และ restart PM2
+          ssh root@10.0.0.6 "cd /var/www/hubs-frontend && pnpm install --frozen-lockfile && pm2 restart hubs-frontend || pm2 start ecosystem.config.js"
